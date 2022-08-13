@@ -1,0 +1,9 @@
+{% if freeContent_list %}
+<ul>
+  {% for content in freeContent_list %}
+  <li><a href="/sports/{{ content.id }}/">{{ content.subject }}</a></li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>게시글이 없습니다.</p>
+{% endif %}
