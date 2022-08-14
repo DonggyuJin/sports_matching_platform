@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block content %}
+<h1>{{ freeContent.subject }}</h1>
+<div>{{ freeContent.content}}</div>
+
+<form action="{% url 'sports:answer_create' freeContent.id %}" method="post">
+  {% csrf_token %}
+  <textarea name="content" id="content" rows="15"></textarea>
+  <input type="submit" value="답변등록" />
+</form>
+{% endblock %}

@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import freeBoard_content, freeBoard_answer
+from .models import FreeContent, FreeAnswer
 
 
-class freeBoard_contentAdmin(admin.ModelAdmin):
+class FreeContentAdmin(admin.ModelAdmin):
     search_fields = ['subject']
 
 
-admin.site.register(freeBoard_answer)
-admin.site.register(freeBoard_content, freeBoard_contentAdmin)
+admin.site.register(FreeAnswer)
+admin.site.register(FreeContent, FreeContentAdmin)
 

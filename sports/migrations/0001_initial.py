@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='freeBoard_content',
+            name='FreeContent',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('subject', models.CharField(max_length=200)),
@@ -22,12 +22,12 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='freeBoard_answer',
+            name='FreeAnswer',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('content', models.TextField()),
                 ('create_date', models.DateTimeField()),
-                ('title', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sports.freeboard_content')),
+                ('title', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sports.FreeContent')),
             ],
         ),
     ]
