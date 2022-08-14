@@ -7,18 +7,26 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-
-    <!-- Bootstrap CSS -->
+    <!-- custom CSS -->
     <link
       rel="stylesheet"
       type="text/css"
-      href="{% static 'bootstrap.min.css' %}"
+      href="{% static 'css/style.css' %}"
     />
-    <!-- custom CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+    <!-- font NotoSans -->
+    <head>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet"
+      />
+    </head>
     <title>Sports Matching Platform</title>
   </head>
   <body>
+    <!-- 네비게이션 바 -->
+    {% include 'navbar.html' %}
+    <!-- 내용 시작 -->
     {% block content %} {% endblock %}
+    <!-- 내용 끝 -->
   </body>
 </html>
