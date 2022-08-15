@@ -1,12 +1,19 @@
-<nav class="navbar">
-  <a class="smp" href="/">로고</a>
-  <div class="menu">
-    <ul class="menuBox">
-      <li>
-        <a class="qs" href="{% url 'sports:index' %}">매칭</a>
+{% load static %}
+<nav class="navbar navbar-nav navbar-expand-lg navbar-bg-custom border-bottom">
+  <div class="container-fluid flex-column">
+    <div class="logo-box">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img src="{% static 'img/stpLogo.png' %}" alt="logo_img" />
+      </a>
+    </div>
+  </div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0 py-3">
+      <li class="nav-item">
+        <a href="{% url 'sports:index' %}">매칭</a>
       </li>
-      <li>
-        <a class="qs" href="#">로그인</a>
+      <li class="nav-item">
+        <a href="#">로그인</a>
       </li>
     </ul>
   </div>

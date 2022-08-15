@@ -10,39 +10,22 @@
   scroll-behavior: smooth !important;
 }
 
-.navbar {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  height: 100px;
+.navbar-bg-custom {
   background-color: #d9d9d9;
 }
 
-.smp {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: blue;
-}
-
-.menu {
-  margin-left: auto;
-  margin-right: 1.5rem;
+.navbar-nav > li > a {
+  padding: 0 0.7rem;
+  color: #000000;
   font-size: 1.3rem;
   font-weight: 700;
-  text-align: center;
 }
 
-.menuBox {
-  display: flex;
-  flex-flow: row nowrap;
+.navbar .container-fluid {
+  height: 70px;
 }
 
-.menuBox a {
-  margin-left: 1rem;
-}
-
-.qs {
-  color: #000000;
+.navbar-brand > img {
+  width: 70px;
+  height: auto;
 }
