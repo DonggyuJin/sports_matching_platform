@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
 
-from ..models import FreeContent
+from ..models import FreeContent, FreeAnswer
 
 def answer_create(request, freeContent_id):
     freeContent = get_object_or_404(FreeContent, pk=freeContent_id)
