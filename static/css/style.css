@@ -15,14 +15,13 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: #f1cc00;
+  background-color: #d9d9d9;
 }
 
 .smp {
-  width: 132px;
-  height: 109px;
-  background-image: url("../img/smp.png");
-  background-repeat: no-repeat;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: blue;
 }
 
 .menu {
