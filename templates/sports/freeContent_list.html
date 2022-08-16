@@ -1,30 +1,78 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% load sports_filter %} {% block content %}
 <div class="container my-3">
-  <table class="table">
-    <thead>
-      <tr class="table-dark">
+  <table class="table table-hover">
+    <thead class="table-secondary">
+      <tr>
         <th>번호</th>
         <th>제목</th>
         <th>작성일시</th>
       </tr>
     </thead>
-    <tbody>
-      {% if freeContent_list %} {% for content in freeContent_list %}
+    <tbody class="table-light">
+      {% if freeContent_list %} 
+      {% for content in freeContent_list %}
       <tr>
-        <td>{{ forloop.counter }}</td>
         <td>
-          <a href="{% url 'sports:detail' content.id %}"
-            >{{ content.subject }}</a
+          {{ freeContent_list.paginator.count|sub:freeContent_list.start_index|sub:forloop.counter0|add:1 }}
+        </td>
+        <td>
+          <a href="{% url 'sports:detail' content.id %}">
+            {{ content.subject }}
+          </a>
+          {% if content.freeanswer_set.count > 0 %}
+          <span class="text-danger small mx-2"
+            >{{ content.freeanswer_set.count }}</span
           >
+          {% endif %}
         </td>
         <td>{{ content.create_date }}</td>
       </tr>
-      {% endfor %} {% else %}
+      {% endfor %} 
+      {% else %}
       <tr>
         <td colspan="3">게시글이 없습니다.</td>
       </tr>
       {% endif %}
     </tbody>
   </table>
+  <ul class="pagination justify-content-center">
+    {% if freeContent_list.has_previous %}
+    <li class="page-item">
+      <a
+        class="page-link"
+        href="?page={{ freeContent_list.previous_page_number }}"
+        ><</a
+      >
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#"><</a>
+    </li>
+    {% endif %} 
+    {% for page_number in freeContent_list.paginator.page_range %}
+    {% if page_number >= freeContent_list.number|add:-2 and page_number <= freeContent_list.number|add:2 %} 
+    {% if page_number == freeContent_list.number %}
+    <li class="page-item active" aria-current="page">
+      <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% endif %} 
+    {% endif %} 
+    {% endfor %} 
+    {% if freeContent_list.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ freeContent_list.next_page_number }}">
+        >
+      </a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">></a>
+    </li>
+    {% endif %}
+  </ul>
 </div>
 {% endblock %}
