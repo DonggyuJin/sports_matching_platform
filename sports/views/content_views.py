@@ -48,3 +48,13 @@ def content_delete(request, freeContent_id):
     freeContent.delete()
     return redirect('sports:index')
 
+@login_required(login_url='common:login')
+def content_recommend(request, freeContent_id):
+    freeContent = get_object_or_404(FreeContent, pk=freeContent_id)
+    if request.user == freeContent.author:
+        messages.error(request, '본인이 작성한 글은 추천할 수 없습니다!')
+    else:
+        freeContent.recommend.add(request.user)
+    return redirect('sports:detail', freeContent_id=freeContent.id)
+
+
