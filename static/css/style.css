@@ -39,6 +39,14 @@
   padding-top: 2rem;
 }
 
+.footer-hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-hover:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+
 .sm-text {
   font-size: 0.9rem;
 }

@@ -2,20 +2,21 @@
 <div class="container my-3">
   <table class="table table-hover">
     <thead class="table-secondary">
-      <tr>
+      <tr class="text-center">
         <th>번호</th>
         <th>제목</th>
+        <th>글쓴이</th>
         <th>작성일시</th>
       </tr>
     </thead>
     <tbody class="table-light">
       {% if freeContent_list %} 
       {% for content in freeContent_list %}
-      <tr>
+      <tr class="text-center">
         <td>
           {{ freeContent_list.paginator.count|sub:freeContent_list.start_index|sub:forloop.counter0|add:1 }}
         </td>
-        <td>
+        <td class="text-start">
           <a href="{% url 'sports:detail' content.id %}">
             {{ content.subject }}
           </a>
@@ -25,6 +26,7 @@
           >
           {% endif %}
         </td>
+        <td>{{ content.author.username }}</td>
         <td>{{ content.create_date }}</td>
       </tr>
       {% endfor %} 
@@ -35,6 +37,7 @@
       {% endif %}
     </tbody>
   </table>
+  <a href="{% url 'sports:content_create' %}" class="btn btn-primary">게시글 등록하기</a>
   <ul class="pagination justify-content-center">
     {% if freeContent_list.has_previous %}
     <li class="page-item">

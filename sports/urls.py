@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import base_views, answer_views
+from .views import base_views, answer_views, content_views
 
 app_name = 'sports'
 
@@ -11,4 +11,10 @@ urlpatterns = [
     
     # answer_views
     path('answer/create/<int:freeContent_id>/', answer_views.answer_create, name='answer_create'),
+    path('answer/modify/<int:answer_id>/', answer_views.answer_modify, name='answer_modify'),
+
+    # content_views
+    path('content/create/', content_views.content_create, name='content_create'),
+    path('content/modify/<int:freeContent_id>/', content_views.content_modify, name='content_modify'),
+    path('content/delete/<int:freeContent_id>/', content_views.content_delete, name='content_delete'),
 ]
