@@ -34,7 +34,7 @@
       </li>
       {% if user.is_authenticated %}
       <li class="nav-link">
-        <a href="{% url 'common:logout' %}">{{ user.username }} (로그아웃)</a>
+        <a href="{% url 'common:logout' %}">{{ user.username }} (Logout)</a>
       </li>
       {% else %}
       <li class="nav-link">
