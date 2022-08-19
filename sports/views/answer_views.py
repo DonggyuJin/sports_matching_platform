@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 from django.http import HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
@@ -8,8 +8,8 @@ from ..models import FreeContent, FreeAnswer
 from ..forms import AnswerForm
 
 @login_required(login_url='common:login')
-def answer_create(request, content_id):
-    freeContent = get_object_or_404(FreeContent, pk=content_id)
+def answer_create(request, freeContent_id):
+    freeContent = get_object_or_404(FreeContent, pk=freeContent_id)
     if request.method == "POST":
         form = AnswerForm(request.POST)
         if form.is_valid():
@@ -18,7 +18,8 @@ def answer_create(request, content_id):
             answer.create_date = timezone.now()
             answer.title = freeContent
             answer.save()
-            return redirect('sports:detail', content_id=freeContent.id)
+            return redirect('{}#answer_{}'.format(
+                resolve_url('sports:detail', freeContent_id=freeContent.id), answer.id))
     else:
         return HttpResponseNotAllowed('Post만 가능합니다.')
     context = {'freeContent': freeContent, 'form': form}
@@ -36,7 +37,8 @@ def answer_modify(request, answer_id):
             answer = form.save(commit=False)
             answer.modify_date = timezone.now()
             answer.save()
-            return redirect('sports:detail', freeContent_id=answer.title.id)
+            return redirect('{}#answer_{}'.format(
+                resolve_url('sports:detail', freeContent_id=answer.title.id), answer.id))
     else:
         form = AnswerForm(instance=answer)
     context = {'answer': answer, 'form': form}
@@ -58,6 +60,7 @@ def answer_recommend(request, answer_id):
         messages.error(request, '본인이 작성한 답변은 추천할수 없습니다')
     else:
         answer.recommend.add(request.user)
-    return redirect('sports:detail', freeContent_id=answer.title.id)
+    return redirect('{}#answer_{}'.format(
+                resolve_url('sports:detail', freeContent_id=answer.title.id), answer.id))
 
 
