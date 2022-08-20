@@ -1,8 +1,10 @@
+from turtle import title
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.utils import timezone
 from django.http import HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 from ..models import FreeContent, FreeAnswer
 from ..forms import AnswerForm

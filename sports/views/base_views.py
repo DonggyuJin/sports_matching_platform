@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.db.models import Q
 
-from ..models import FreeContent
+from ..models import FreeContent, FreeAnswer
 
 def index(request):
     freeContent_list = FreeContent.objects.order_by('-create_date')
@@ -27,5 +27,11 @@ def index(request):
 
 def detail(request, freeContent_id):
     freeContent = get_object_or_404(FreeContent, pk=freeContent_id)
-    context = {'freeContent': freeContent}
+    # 답변 페이징을 위한 list
+    answer_list = FreeAnswer.objects.filter(title=freeContent).order_by('create_date')
+    answer_page = request.GET.get('page', '1')
+    answer_paginator = Paginator(answer_list, 5)
+    answer_page_obj = answer_paginator.get_page(answer_page)
+    # answer_list에 답변 페이징 객체 전달
+    context = {'freeContent': freeContent, 'answer_list': answer_page_obj}
     return render(request, 'sports/freeContent_detail.html', context)

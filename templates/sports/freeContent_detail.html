@@ -55,7 +55,8 @@
   <h5 class="border-bottom my-3 py-2">
     {{freeContent.freeanswer_set.count}}개의 답변이 있습니다.
   </h5>
-  {% for answer in freeContent.freeanswer_set.all %}
+  {% if answer_list %}
+  {% for answer in answer_list %}
   <a id="answer_{{ answer.id }}"></a>
   <div class="card my-3">
     <div class="card-body">
@@ -101,7 +102,46 @@
     </div>
   </div>
   {% endfor %}
+  {% endif %}
   <!-- 답변 등록 -->
+  <!-- 답변 페이징 시작 -->
+  <ul class="pagination justify-content-center">
+    <!-- 이전페이지 -->
+    {% if answer_list.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?answer_page={{ answer_list.previous_page_number }}"><</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#"><</a>
+    </li>
+    {% endif %}
+    <!-- 페이지리스트 -->
+    {% for page_number in answer_list.paginator.page_range %}
+    {% if page_number >= answer_list.number|add:-2 and page_number <= answer_list.number|add:2 %}
+    {% if page_number == answer_list.number %}
+    <li class="page-item active" aria-current="page">
+      <a class="page-link" href="?answer_page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+      <a class="page-link" href="?answer_page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    <!-- 다음페이지 -->
+    {% if answer_list.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?answer_page={{ answer_list.next_page_number }}">></a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">></a>
+    </li>
+    {% endif %}
+  </ul>
+  <!-- 답변 페이징 끝 -->
   <form
     action="{% url 'sports:answer_create' freeContent.id %}"
     method="post"
