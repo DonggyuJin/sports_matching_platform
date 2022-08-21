@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% load sports_filter %} {% block content %}
+{% extends 'base.html' %} 
+{% load sports_filter %} 
+{% block content %}
 <div class="container my-3">
   <div class="row my-3">
     <div class="col-6">
@@ -95,7 +97,7 @@
       <a class="page-link" tabindex="-1" aria-disabled="true" href="#">></a>
     </li>
     {% endif %}
-  </ul>
+</ul>
 </div>
 <form id="searchForm" method="get" action="{% url 'sports:index' %}">
   <input type="hidden" id="sports" name="sports" value="{{ sports|default_if_none:'' }}">

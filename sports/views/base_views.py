@@ -28,10 +28,10 @@ def index(request):
 def detail(request, freeContent_id):
     freeContent = get_object_or_404(FreeContent, pk=freeContent_id)
     # 답변 페이징을 위한 list
-    answer_list = FreeAnswer.objects.filter(title=freeContent).order_by('create_date')
+    answer_list = FreeAnswer.objects.filter(title_id=freeContent_id).order_by('create_date')
     answer_page = request.GET.get('page', '1')
     answer_paginator = Paginator(answer_list, 5)
     answer_page_obj = answer_paginator.get_page(answer_page)
     # answer_list에 답변 페이징 객체 전달
-    context = {'freeContent': freeContent, 'answer_list': answer_page_obj}
+    context = {'freeContent': freeContent, 'answer_list': answer_page_obj, 'page': answer_page}
     return render(request, 'sports/freeContent_detail.html', context)
