@@ -10,5 +10,10 @@ urlpatterns = [
     # sports app
     path('', index_views.index, name='index'),
     path('sports/', include('sports.urls')),
+
+    # common app
     path('common/', include('common.urls')),
+
+    # match app
+    path('match/', include('match.urls')),
 ]

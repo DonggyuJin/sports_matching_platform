@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        <tr class="table-dark">
+            <th>번호</th>
+            <th>제목</th>
+            <th>글쓴이</th>
+            <th>운동일정</th>
+            <th>작성일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if match_list %}
+        {% for match in match_list %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                <a href="{% url 'match:detail' match.id %}">{{ match.title }}</a>
+            </td>
+            <td>{{ match.author.username }}</td>
+            <td>{{ match.sports_date }}</td>
+            <td>{{ match.create_date }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">질문이 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

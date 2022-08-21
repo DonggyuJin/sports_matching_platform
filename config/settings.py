@@ -19,6 +19,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'match.apps.MatchConfig',
     'common.apps.CommonConfig',
     'sports.apps.SportsConfig',
     'django.contrib.admin',
