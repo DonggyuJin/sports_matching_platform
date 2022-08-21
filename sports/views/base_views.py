@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -27,11 +28,30 @@ def index(request):
 
 def detail(request, freeContent_id):
     freeContent = get_object_or_404(FreeContent, pk=freeContent_id)
+    
     # 답변 페이징을 위한 list
     answer_list = FreeAnswer.objects.filter(title_id=freeContent_id).order_by('create_date')
     answer_page = request.GET.get('page', '1')
     answer_paginator = Paginator(answer_list, 5)
     answer_page_obj = answer_paginator.get_page(answer_page)
+
     # answer_list에 답변 페이징 객체 전달
     context = {'freeContent': freeContent, 'answer_list': answer_page_obj, 'page': answer_page}
-    return render(request, 'sports/freeContent_detail.html', context)
+    response = render(request, 'sports/freeContent_detail.html', context)
+    
+    # 조회수
+    expire_date, now = datetime.now(), datetime.now()
+    expire_date += timedelta(days=1)
+    expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
+    expire_date -= now
+    max_age = expire_date.total_seconds()
+
+    cookie_value = request.COOKIES.get('hitcontent', '_')
+
+    if f'_{freeContent_id}_' not in cookie_value:
+        cookie_value += f'{freeContent_id}_'
+        response.set_cookie('hitcontent', value=cookie_value, max_age=max_age, httponly=True)
+        freeContent.hits += 1
+        freeContent.save()
+
+    return response
