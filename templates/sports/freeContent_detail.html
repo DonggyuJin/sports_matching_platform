@@ -45,9 +45,10 @@
         {% if request.user == freeContent.author %}
             <a href="{% url 'sports:content_modify' freeContent.id  %}" 
               class="btn btn-sm btn-outline-secondary">수정</a>
-            {% endif %}
+            
             <a href="javascript:void(0)" class="delete btn btn-sm btn-outline-secondary"
               data-uri="{% url 'sports:content_delete' freeContent.id  %}">삭제</a>
+              {% endif %}
       </div>
     </div>
   </div>

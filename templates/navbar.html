@@ -37,7 +37,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
   </div>
-  <div class="collapse navbar-collapse container-fluid border-bottom border-dark" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse container-fluid" id="navbarSupportedContent">
     <a class="stp-img" href="{% url 'index' %}">
       <img src="{% static 'img/stpLogo.png' %}" alt="logo_img"/>
     </a>
@@ -46,7 +46,24 @@
         <a href="#">소개</a>
       </li>
       <li class="nav-link">
-        <a href="{% url 'match:index' %}">매칭게시판</a>
+        <div id="navbarNavDarkDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">매칭</a>
+              <ul class="dropdown-menu dropdown-menu-light dropdown-match">
+                <li>
+                  <a class="dropdown-item" href="{% url 'match:index' %}">매칭 목록</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'match:match_create' %}">신청</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">후기</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </li>
       <li class="nav-link">
         <a href="{% url 'sports:index' %}">자유게시판</a>

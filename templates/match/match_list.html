@@ -1,35 +1,103 @@
 {% extends 'base.html' %}
+{% load match_filter %} 
 {% block content %}
-<div class="container my-3">
-    <table class="table">
-        <thead>
-        <tr class="table-dark">
-            <th>번호</th>
-            <th>제목</th>
-            <th>글쓴이</th>
-            <th>운동일정</th>
-            <th>작성일시</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% if match_list %}
-        {% for match in match_list %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>
-                <a href="{% url 'match:detail' match.id %}">{{ match.title }}</a>
-            </td>
-            <td>{{ match.author.username }}</td>
-            <td>{{ match.sports_date }}</td>
-            <td>{{ match.create_date }}</td>
-        </tr>
-        {% endfor %}
-        {% else %}
-        <tr>
-            <td colspan="3">질문이 없습니다.</td>
-        </tr>
-        {% endif %}
-        </tbody>
-    </table>
+<div class="container mt-3 mb-6">
+  <div class="row mt-3">
+  {% if match_list %}
+  {% for match in match_list %}
+  <div class="col-lg-3 my-2">
+    
+  <div class="card border-0 shadow mb-3">
+    <div class="card-header py-3">
+        💌 {{ match.title }}
+    </div>
+    <div class="card-body">
+      <div class="container px-0">
+        <div class="row pt-2 pb-4">
+            <div class="col-8">
+                <h5 class="card-title">🎅 {{ match.author.username }}</h5>
+            </div>
+            <div class="col">
+                {% if request.user == match.author %}
+                <a class="cursor text-danger ms-2" href="{% url 'match:match_modify' match.id  %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                    </svg>
+                </a>
+                <a class="delete cursor text-warning ms-3" href="javascript:void(0)" 
+                   data-uri="{% url 'match:match_delete' match.id  %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill ms-2" viewBox="0 0 16 16">
+                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                    </svg>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+      </div>
+      <p class="card-text pb-2">스포츠 종류 💨 {{ match.sports_name }}</p>
+      <p class="card-text pb-2">일정 💨 {{ match.sports_date }}</p>
+      <p class="card-text pb-2">주소 💨 {{ match.address }}</p>
+      <p class="card-text pb-2">세부사항 💨 {{ match.content }}</p>
+      
+      <div class="container mt-2 px-0">
+        <div class="row">
+            <div class="col-8">
+                <form action="{% url 'match:apply' match.id %}" method="post" class="my-3">
+                    {% csrf_token %}
+                    {% if request.user != match.author %}
+                      {% if match.apply_count < match.max_apply %}
+                        {% if user in match.apply_state.all %}
+                        <input type="submit" value="신청취소" class="btn btn-danger" >
+                        {% else %}
+                        <input type="submit" value="신청하기" class="btn btn-success">
+                        {% endif %}
+                      {% else %}
+                      <input type="submit" value="신청마감" class="btn btn-secondary" disabled>
+                      {% endif %}
+                    {% else %}
+                      {% if match.apply_count < match.max_apply %}
+                      <input type="submit" value="신청취소" class="btn btn-secondary" disabled>
+                      {% else %}
+                      <input type="submit" value="신청마감" class="btn btn-secondary" disabled>
+                      {% endif %}
+                    {% endif %}
+                </form>
+            </div>
+            <div class="col d-flex justify-content-center align-items-center">
+                <p class="card-text">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
+                        <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z"/>
+                      </svg>
+                      <span class="ps-1">{{ match.apply_count }}/{{ match.max_apply }}</span>
+                </p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="card border-info mb-3" style="max-width: 18rem;">
+    <div class="card-header">현재 등록된 글이 없습니다.</div>
+      <div class="card-body">
+        <h5 class="card-title">글을 등록해주세요.</h5>
+      </div>
+    </div>
+  {% endif %}
 </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+  const delete_elements = document.getElementsByClassName("delete");
+  Array.from(delete_elements).forEach(function(element) {
+      element.addEventListener('click', function() {
+          if(confirm("삭제하시겠습니까?")) {
+              location.href = this.dataset.uri;
+          };
+      });
+  });
+</script>
 {% endblock %}

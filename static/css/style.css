@@ -11,7 +11,7 @@
 }
 
 .dropdown {
-  padding-bottom: 8px;
+  padding-bottom: 10px;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -23,8 +23,12 @@
   transform: translate(-70%, 10%);
 }
 
+.dropdown-match {
+  transform: translate(-30%, 10%);
+}
+
 .dropdown-item {
-  padding: 0.45rem 0.7rem;
+  padding: 0.45rem 0.8rem;
   color: #4e2500;
   font-size: 1rem;
   font-weight: 500;
@@ -71,4 +75,8 @@
 
 .sm-text {
   font-size: 0.9rem;
+}
+
+.cursor {
+  cursor: pointer;
 }
