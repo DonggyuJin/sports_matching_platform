@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h4 class="border-bottom pb-2 my-3">닉네임: {{ profile_user.nickname }}</h4>
+<h4 class="border-bottom pb-2 my-3">아이디: {{ profile_user.username }}</h4>
+<h4 class="border-bottom pb-2 my-3">이메일: {{ profile_user.email }}</h4>
+<h4 class="border-bottom pb-2 my-3">번호: {{ profile_user.phonenumber }}</h4>
+<h4 class="border-bottom pb-2 my-3">주소: {{ profile_user.address }}</h4>
+<h4 class="border-bottom pb-2 my-3">선호하는 운동: {{ profile_user.favorite }}</h4>
+<h4 class="border-bottom pb-2 my-3">자기소개: {{ profile_user.introduction }}</h4>
+{% if user == profile_user %}
+<button onclick= "location.href='/common/profile/update/{{user.id}}'">프로필 수정</button>
+<button onclick= "location.href='/common/profile/change_password/{{user.id}}'">비밀번호 변경</button>
+{% endif %}
+{% endblock %}

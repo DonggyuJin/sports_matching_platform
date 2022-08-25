@@ -15,7 +15,7 @@
               <a class="dropdown-item" href="{% url 'common:logout' %}">로그아웃 ({{ user.username }})</a>
             </li>
             <li>
-              <a class="dropdown-item" href="#">마이페이지</a>
+              <a class="dropdown-item" href="{% url 'common:profile_base' user.id%}">마이페이지</a>
             </li>
             {% else %}
             <li>

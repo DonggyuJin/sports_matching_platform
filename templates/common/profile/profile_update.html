@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST">
+{% csrf_token %}
+<table>
+    <tr>
+        <td>닉네임</td>
+        <td">{{ user_change_form.nickname }}</td>
+    </tr>
+    <tr>
+        <td>연락처</td>
+        <td>{{ user_change_form.phonenumber }}</td>
+    </tr>
+    <tr>
+        <td>주소</td>
+        <td>{{ user_change_form.address }}</td>
+    </tr>
+    <tr>
+        <td>선호하는 운동</td>
+        <td>{{ user_change_form.favorite }}</td>
+    </tr>
+    <tr>
+        <td>자기소개</td>
+        <td>{{ user_change_form.introduction }}</td>
+    </tr>
+</table>
+<button type="submit">수정하기</button>
+</form>
+{% endblock %}
