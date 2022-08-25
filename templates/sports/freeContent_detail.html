@@ -21,6 +21,12 @@
         {{ freeContent.content }}
       </div>
       <div class="d-flex justify-content-end">
+        {% if freeContent.modify_date %}
+        <div class="badge bg-light text-dark p-2 text-start mx-3">
+            <div class="mb-2">modified at</div>
+            <div>{{ freeContent.modify_date }}</div>
+        </div>
+        {% endif %}
         <div class="badge bg-light text-dark p-2 text-start">
           <div class="mb-2">{{ freeContent.author.username }}</div>
           <div>
@@ -29,6 +35,13 @@
         </div>
       </div>
       <div class="my-3">
+        <a href="javascript:void(0)" 
+           data-uri="{% url 'sports:content_recommend' freeContent.id  %}"
+           class="recommend btn btn-sm btn-outline-secondary"> 추천
+           <span class="badge rounded-pill bg-success">
+            {{ freeContent.recommend.count }}
+           </span>
+        </a>
         {% if request.user == freeContent.author %}
             <a href="{% url 'sports:content_modify' freeContent.id  %}" 
               class="btn btn-sm btn-outline-secondary">수정</a>
@@ -42,13 +55,21 @@
   <h5 class="border-bottom my-3 py-2">
     {{freeContent.freeanswer_set.count}}개의 답변이 있습니다.
   </h5>
-  {% for answer in freeContent.freeanswer_set.all %}
+  {% if answer_list %}
+  {% for answer in answer_list %}
+  <a id="answer_{{ answer.id }}"></a>
   <div class="card my-3">
     <div class="card-body">
       <div class="card-text" style="white-space: pre-line">
         {{ answer.content }}
       </div>
       <div class="d-flex justify-content-end">
+        {% if answer.modify_date %}
+        <div class="badge bg-light text-dark p-2 text-start mx-3">
+          <div class="mb-2">modified at</div>
+          <div>{{ answer.modify_date }}</div>
+        </div>
+        {% endif %}
         <div class="badge bg-light text-dark p-2 text-start">
           <div class="mb-2">
             {{ answer.author.username }}
@@ -58,10 +79,69 @@
           </div>
         </div>
       </div>
+      <div class="my-3">
+        <a href="javascript:void(0)" 
+           data-uri="{% url 'sports:answer_recommend' answer.id  %}"
+           class="recommend btn btn-sm btn-outline-secondary"> 추천
+           <span class="badge rounded-pill bg-success">
+            {{ answer.recommend.count }}
+           </span>
+        </a>
+        {% if request.user == answer.author %}
+        <a href="{% url 'sports:answer_modify' answer.id  %}" 
+           class="btn btn-sm btn-outline-secondary">
+           수정
+        </a>
+        <a href="#" 
+           class="delete btn btn-sm btn-outline-secondary "
+           data-uri="{% url 'sports:answer_delete' answer.id  %}">
+           삭제
+        </a>
+        {% endif %}
+      </div>
     </div>
   </div>
   {% endfor %}
+  {% endif %}
   <!-- 답변 등록 -->
+  <!-- 답변 페이징 시작 -->
+  <ul class="pagination justify-content-center">
+    <!-- 이전페이지 -->
+    {% if answer_list.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?answer_page={{ answer_list.previous_page_number }}"><</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#"><</a>
+    </li>
+    {% endif %}
+    <!-- 페이지리스트 -->
+    {% for page_number in answer_list.paginator.page_range %}
+    {% if page_number >= answer_list.number|add:-2 and page_number <= answer_list.number|add:2 %}
+    {% if page_number == answer_list.number %}
+    <li class="page-item active" aria-current="page">
+      <a class="page-link" href="?answer_page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+      <a class="page-link" href="?answer_page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    <!-- 다음페이지 -->
+    {% if answer_list.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?answer_page={{ answer_list.next_page_number }}">></a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">></a>
+    </li>
+    {% endif %}
+  </ul>
+  <!-- 답변 페이징 끝 -->
   <form
     action="{% url 'sports:answer_create' freeContent.id %}"
     method="post"
@@ -84,13 +164,22 @@
 {% endblock %}
 {% block script %}
 <script type='text/javascript'>
-const delete_elements = document.getElementsByClassName("delete");
-Array.from(delete_elements).forEach(function(element) {
-    element.addEventListener('click', function() {
-        if(confirm("정말로 삭제하시겠습니까?")) {
-            location.href = this.dataset.uri;
-        };
-    });
-});
+  const delete_elements = document.getElementsByClassName("delete");
+  Array.from(delete_elements).forEach(function(element) {
+      element.addEventListener('click', function() {
+          if(confirm("삭제하시겠습니까?")) {
+              location.href = this.dataset.uri;
+          };
+      });
+  });
+
+  const recommend_elements = document.getElementsByClassName("recommend");
+  Array.from(recommend_elements).forEach(function(element) {
+      element.addEventListener('click', function() {
+          if(confirm("추천하시겠습니까?")) {
+              location.href = this.dataset.uri;
+          };
+      });
+  });
 </script>
 {% endblock %}

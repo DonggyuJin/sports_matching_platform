@@ -34,6 +34,9 @@
       </li>
       {% if user.is_authenticated %}
       <li class="nav-link">
+        <a href="{% url 'common:profile_base' user.id%}">마이페이지</a>
+      </li>
+      <li class="nav-link">
         <a href="{% url 'common:logout' %}">{{ user.username }} (Logout)</a>
       </li>
       {% else %}

@@ -5,7 +5,12 @@
         {% csrf_token %}
         {% include "form_errors.html" %}
         <div class="mb-3">
-            <label for="username">사용자 이름</label>
+            <label for="nickname">닉네임</label>
+            <input type="text" class="form-control" name="nickname" id="nickname"
+                   value="{{ form.nickname.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="username">아이디</label>
             <input type="text" class="form-control" name="username" id="username"
                    value="{{ form.username.value|default_if_none:'' }}">
         </div>
@@ -21,10 +26,30 @@
         </div>
         <div class="mb-3">
             <label for="email">이메일</label>
-            <input type="text" class="form-control" name="email" id="email"
+            <input type="email" class="form-control" name="email" id="email"
                    value="{{ form.email.value|default_if_none:'' }}">
         </div>
-        <button type="submit" class="btn btn-primary">생성하기</button>
+        <div class="mb-3">
+            <label for="phonenumber">핸드폰 번호</label>
+            <input type="text" class="form-control" name="phonenumber" id="phonenumber"
+                   value="{{ form.phonenumber.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="address">주소(선택)</label>
+            <input type="text" class="form-control" name="address" id="address"
+                   value="{{ form.address.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="favorite">선호하는 운동(선택)</label>
+            <input type="text" class="form-control" name="favorite" id="favorite"
+                   value="{{ form.favorite.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="introduction">자기소개(선택)</label>
+            <input type="text" class="form-control" name="introduction" id="introduction"
+                   value="{{ form.introduction.value|default_if_none:'' }}">
+        </div>
+        <button type="submit" class="btn btn-primary">회원가입</button>
     </form>
 </div>
 {% endblock %}

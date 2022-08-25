@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>유저 랭킹</h2>
+<table>
+    <thead>
+        <tr>
+            <td>랭킹</td>
+            <td>닉네임</td>
+            <td>점수</td>
+            <td>칭호</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in user_ranking %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="{% url 'common:profile_base' i.id %}">{{ i.nickname }}</a></td>
+            <td>{{ i.score }}</td>
+            <td>{{ i.tier }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
