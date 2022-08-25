@@ -1,0 +1,52 @@
+@import "reset.css";
+
+* {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-family: "Spoqa Han Sans Neo", sans-serif, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif !important;
+  font-weight: 400;
+  scroll-behavior: smooth !important;
+}
+
+.navbar-nav > li > a {
+  padding: 0 1rem;
+  color: #4e2500;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.navbar-nav > li > a:hover {
+  color: #7e5f5f
+}
+
+.navbar .container-fluid {
+  height: 100px;
+}
+
+.navbar-brand > img {
+  width: 100px;
+  height: auto;
+}
+
+.footer-box {
+  height: 300px;
+  background-color: #7e5f5f;
+}
+
+.footer-box .box-frame {
+  padding-top: 2rem;
+}
+
+.footer-hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-hover:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.sm-text {
+  font-size: 0.9rem;
+}

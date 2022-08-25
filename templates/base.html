@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/bootstrap.min.css' %}"
+    />
+    <!-- custom CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+    <!-- font NotoSans -->
+    <head>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet"
+      />
+    </head>
+    <title>Sports Matching Platform</title>
+  </head>
+  <body>
+    <!-- 네비게이션 바 -->
+    {% include 'navbar.html' %}
+    <!-- 내용 시작 -->
+    {% block content %} 
+    {% endblock %}
+    <!-- 내용 끝 -->
+    <!-- 푸터 -->
+    {% include 'footer.html' %}
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block script %}
+    {% endblock %}
+  </body>
+</html>

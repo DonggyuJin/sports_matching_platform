@@ -1,0 +1,49 @@
+{% load static %}
+<nav class="navbar navbar-nav navbar-light navbar-expand-lg p-0 mb-5">
+  <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img src="{% static 'img/stpLogo.png' %}" alt="logo_img"/>
+      </a>
+      <button 
+        class="navbar-toggler" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#navbarSupportedContent" 
+        aria-controls="navbarSupportedContent" 
+        aria-expanded="false" 
+        aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0 py-3">
+      <li class="nav-link">
+        <a href="#">소개</a>
+      </li>
+      <li class="nav-link">
+        <a href="#">매칭게시판</a>
+      </li>
+      <li class="nav-link">
+        <a href="{% url 'sports:index' %}">자유게시판</a>
+      </li>
+      <!-- <li class="nav-link">
+        <a href="#">장비렌탈</a>
+      </li> -->
+      <li class="nav-link">
+        <a href="#">고객센터</a>
+      </li>
+      {% if user.is_authenticated %}
+      <li class="nav-link">
+        <a href="{% url 'common:profile_base' user.id%}">마이페이지</a>
+      </li>
+      <li class="nav-link">
+        <a href="{% url 'common:logout' %}">{{ user.username }} (Logout)</a>
+      </li>
+      {% else %}
+      <li class="nav-link">
+        <a href="{% url 'common:login' %}">로그인</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
