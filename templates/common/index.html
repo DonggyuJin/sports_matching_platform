@@ -1,5 +1,11 @@
-{% extends 'base.html' %}{% block content %}
-<section>
-  <h1>섹션 이름은 SMP, Sports Matching Platform !!</h1>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="container-fluid pb-5">
+  <div class="row">
+    <div class="col-12 main-img p-0">
+      <img src="{% static 'img/main_img.png' %}" alt="main_img">
+    </div>
+  </div>
 </section>
 {% endblock %}

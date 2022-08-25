@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load match_filter %} 
+{% block content %}
+<div class="container mt-3 mb-6">
+  <div class="row mt-3">
+  {% if review_list %}
+  {% for review in review_list %}
+  {% if review.max_apply == review.apply_count %}
+  <div class="col-lg-3 my-2">
+  <div class="card border-0 shadow mb-3">
+    <div class="card-header py-3">
+        💌 {{ review.title }}
+    </div>
+    <div class="card-body">
+      <div class="container px-0">
+        <div class="row pt-2 pb-4">
+            <div class="col-8">
+                <h5 class="card-title">🎅 {{ review.author.username }}</h5>
+            </div>
+        </div>
+      </div>
+      <p class="card-text pb-2">스포츠 종류 💨 {{ review.sports_name }}</p>
+      <p class="card-text pb-2">일정 💨 {{ review.sports_date }}</p>
+      <p class="card-text pb-2">주소 💨 {{ review.address }}</p>
+      <p class="card-text pb-2">세부사항 💨 {{ review.content }}</p>
+      
+      <div class="container mt-2 px-0">
+        <div class="row">
+            <div class="col-8">
+                <form action="{% url 'match:apply' review.id %}" method="post" class="my-3">
+                    {% csrf_token %}
+                    {% if request.user != review.author %}
+                      {% if review.apply_count < review.max_apply %}
+                        {% if user in review.apply_state.all %}
+                        <input type="submit" value="신청취소" class="btn btn-danger" >
+                        {% else %}
+                        <input type="submit" value="신청하기" class="btn btn-success">
+                        {% endif %}
+                      {% else %}
+                      <input type="submit" value="신청마감" class="btn btn-secondary" disabled>
+                      {% endif %}
+                    {% else %}
+                      {% if review.apply_count < review.max_apply %}
+                      <input type="submit" value="신청취소" class="btn btn-secondary" disabled>
+                      {% else %}
+                      <input type="submit" value="신청마감" class="btn btn-secondary" disabled>
+                      {% endif %}
+                    {% endif %}
+                </form>
+            </div>
+            <div class="col d-flex justify-content-center align-items-center">
+                <p class="card-text">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
+                        <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z"/>
+                      </svg>
+                      <span class="ps-1">{{ review.apply_count }}/{{ review.max_apply }}</span>
+                </p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+  {% else %}
+  {% endif %}
+  {% endfor %}
+  {% else %}
+  <div class="card border-info mb-3" style="max-width: 18rem;">
+    <div class="card-header">현재 등록된 글이 없습니다.</div>
+      <div class="card-body">
+        <h5 class="card-title">글을 등록해주세요.</h5>
+      </div>
+    </div>
+  {% endif %}
+</div>
+</div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+  const delete_elements = document.getElementsByClassName("delete");
+  Array.from(delete_elements).forEach(function(element) {
+      element.addEventListener('click', function() {
+          if(confirm("삭제하시겠습니까?")) {
+              location.href = this.dataset.uri;
+          };
+      });
+  });
+</script>
+{% endblock %}
