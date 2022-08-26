@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form method="POST">
 <input type="button" value="캡쳐" />
 <a id="target" style="display: none"></a>
 <script>
@@ -19,10 +18,10 @@ $(":button").on('click', function(e) {
     } else { 
       var el = document.getElementById("target");
       el.href = canvas.toDataURL("image/jpeg");
+      el.download = 'screenshot.jpg';
       el.click();
     }
   });
 });
 </script>
-</form>
 {% endblock %}
