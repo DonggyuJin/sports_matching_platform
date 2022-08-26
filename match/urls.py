@@ -16,6 +16,7 @@ urlpatterns = [
     path('delete/<int:match_id>/', match_views.match_delete, name='match_delete'),
 
     # review_views
-    path('match/review/', review_views.review_index, name='review_index'),
-
+    path('review/', review_views.review_index, name='review_index'),
+    path('<int:match_id>/review/', base_views.review_apply, name='review_apply'),
+    path('<int:match_id>/review/detail', review_views.review_detail, name='review_detail'),
 ]

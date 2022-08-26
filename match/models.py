@@ -24,3 +24,7 @@ class MatchSports(models.Model):
     
     def __str__(self):
         return self.title
+
+class UserApply(models.Model):
+    user_check = models.CharField(max_length=20)
+    match_check = models.IntegerField(default=0)

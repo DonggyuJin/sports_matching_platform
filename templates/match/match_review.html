@@ -5,9 +5,6 @@
   <div class="row mt-3">
   {% if match_list %}
   {% for match in match_list %}
-  {% if match.apply_count == match.max_apply %}
-
-  {% else %}
   <div class="col-lg-3 my-2">
     
   <div class="card border-0 shadow mb-3">
@@ -45,25 +42,9 @@
       <div class="container mt-2 px-0">
         <div class="row">
             <div class="col-8">
-                <form action="{% url 'match:apply' match.id %}" method="post" class="my-3">
+                <form action="{% url 'match:review_detail' match.id %}" class="my-3">
                     {% csrf_token %}
-                    {% if request.user != match.author %}
-                      {% if match.apply_count < match.max_apply %}
-                        {% if user in match.apply_state.all %}
-                        <input type="submit" value="신청취소" class="btn btn-danger" >
-                        {% else %}
-                        <input type="submit" value="신청하기" class="btn btn-success">
-                        {% endif %}
-                      {% else %}
-                      <input type="submit" value="신청마감" class="btn btn-secondary" disabled>
-                      {% endif %}
-                    {% else %}
-                      {% if match.apply_count < match.max_apply %}
-                      <input type="submit" value="신청취소" class="btn btn-secondary" disabled>
-                      {% else %}
-                      <input type="submit" value="신청마감" class="btn btn-secondary" disabled>
-                      {% endif %}
-                    {% endif %}
+                    <input type="submit" value="후기작성" class="btn btn-success" >
                 </form>
             </div>
             <div class="col d-flex justify-content-center align-items-center">
@@ -80,7 +61,6 @@
   </div>
   
   </div>
-  {% endif %}
   {% endfor %}
   {% else %}
   <div class="card border-info mb-3" style="max-width: 18rem;">

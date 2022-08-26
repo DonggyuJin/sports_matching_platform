@@ -27,5 +27,6 @@ urlpatterns = [
     path('profile/change_password/<int:user_id>', profile_views.password_edit_view, name='password_edit'),
 
     # 랭킹
-    path('ranking/', ranking_views.ranking, name='ranking')
+    path('ranking/', ranking_views.ranking, name='ranking'),
+    path('test/', profile_views.screenshot, name='test'),
 ]
