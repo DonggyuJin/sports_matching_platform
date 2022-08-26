@@ -17,5 +17,6 @@ urlpatterns = [
 
     # review_views
     path('review/', review_views.review_index, name='review_index'),
-
+    path('<int:match_id>/review/', base_views.review_apply, name='review_apply'),
+    path('<int:match_id>/review/detail', review_views.review_detail, name='review_detail'),
 ]

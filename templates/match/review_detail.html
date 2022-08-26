@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST">
+{% csrf_token %}
+{{ matchapply.author.nickname }}<br>
+<input type="radio" id="good" name="score" value=2>
+<label for="male">좋아요</label><br>
+<input type="radio" id="soso" name="score" value=1>
+<label for="female">보통이에요</label><br>
+<input type="radio" id="bad" name="score" value=0>
+<label for="other">싫어요</label><br>
+{% for i in user %}
+{{ i.nickname }}<br>
+<input type="radio" id="good" name="score{{forloop.counter0}}" value=2>
+<label for="male">좋아요</label><br>
+<input type="radio" id="soso" name="score{{forloop.counter0}}" value=1>
+<label for="female">보통이에요</label><br>
+<input type="radio" id="bad" name="score{{forloop.counter0}}" value=0>
+<label for="other">싫어요</label><br>
+{% endfor %}
+<input type="submit" value="adsfdsf">
+</form>
+{% endblock %}

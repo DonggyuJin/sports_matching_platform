@@ -14,8 +14,8 @@
     </div>
   </div>
   <table class="table table-hover">
-    <thead class="table-dark">
-      <tr class="text-center text-white">
+    <thead class="table-light border">
+      <tr class="text-center text-dark">
         <th>번호</th>
         <th style="width: 40%;">제목</th>
         <th>조회수</th>
@@ -23,10 +23,10 @@
         <th>작성일시</th>
       </tr>
     </thead>
-    <tbody class="table-primary text-dark">
+    <tbody class="table-white text-dark">
       {% if freeContent_list %} 
       {% for content in freeContent_list %}
-      <tr class="text-center border border-bottom border-dark">
+      <tr class="text-center border">
         <td>
           {{ freeContent_list.paginator.count|sub:freeContent_list.start_index|sub:forloop.counter0|add:1 }}
         </td>
