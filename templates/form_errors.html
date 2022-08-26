@@ -1,19 +1,19 @@
 {% load static %}
 {% if form.errors %}
-<div class="alert alert-danger">
+<div class="alert alert-blue font-jua">
     {% for field in form %}
     {% if field.errors %}
-    <div>
-        <strong>{{ field.label }}</strong>
-    </div>
     <div class="py-2">
-        <span>{{ field.errors }}</span>
+        <strong class="text-white">{{ field.label }}</strong>
+    </div>
+    <div class="pb-2">
+        <span class="text-white">{{ field.errors }}</span>
     </div>
     {% endif %}
     {% endfor %}
     {% for error in form.non_field_errors %}
     <div>
-        <strong>{{ error }}</strong>
+        <strong class="text-white">{{ error }}</strong>
     </div>
     {% endfor %}
 </div>

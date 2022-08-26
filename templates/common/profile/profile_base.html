@@ -1,15 +1,86 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h4 class="border-bottom pb-2 my-3">닉네임: {{ profile_user.nickname }}</h4>
-<h4 class="border-bottom pb-2 my-3">아이디: {{ profile_user.username }}</h4>
-<h4 class="border-bottom pb-2 my-3">이메일: {{ profile_user.email }}</h4>
-<h4 class="border-bottom pb-2 my-3">번호: {{ profile_user.phonenumber }}</h4>
-<h4 class="border-bottom pb-2 my-3">주소: {{ profile_user.address }}</h4>
-<h4 class="border-bottom pb-2 my-3">선호하는 운동: {{ profile_user.favorite }}</h4>
-<h4 class="border-bottom pb-2 my-3">자기소개: {{ profile_user.introduction }}</h4>
-{% if user == profile_user %}
-<button onclick= "location.href='/common/profile/update/{{user.id}}'">프로필 수정</button>
-<button onclick= "location.href='/common/profile/change_password/{{user.id}}'">비밀번호 변경</button>
-{% endif %}
+<section class="d-flex justify-content-center align-items-center">
+    <div class="container py-4 h-500">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="col-md-12 col-lg-12 col-xl-12 text-center login-header mb-5">
+          <h1 class="fw-bold text-decoration">
+            <a href="{% url 'common:login' %}">
+              마이페이지
+            </a>
+          </h1>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6 border border-2 sign-form rounded-3">
+            
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col ps-0">
+                        <span class="mypage-text">닉네임: {{ profile_user.nickname }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col ps-0">
+                        <span class="mypage-text">아이디: {{ profile_user.username }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col ps-0">
+                        <span class="mypage-text">이메일: {{ profile_user.email }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col ps-0">
+                        <span class="mypage-text">번호: {{ profile_user.phonenumber }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col ps-0">
+                        <span class="mypage-text">주소: {{ profile_user.address }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col ps-0">
+                        <span class="mypage-text">선호하는 운동: {{ profile_user.favorite }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col ps-0">
+                        <span class="mypage-text">자기소개: {{ profile_user.introduction }}</span>
+                    </div>
+                </div>
+            </div>
+
+            {% if user == profile_user %}
+            <div class="row pt-3">
+                <div class="col-6 d-flex justify-content-center">
+                    <button onclick="location.href='/common/profile/update/{{user.id}}'" class="btn px-3 login-btn text-white fs-5">프로필 수정</button>
+                </div>
+                <div class="col-6 d-flex justify-content-center">
+                    <button onclick="location.href='/common/profile/change_password/{{user.id}}'" class="btn px-3 login-btn text-white fs-5">비밀번호 변경</button>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+      </div>
+    </div>
+</section>
 {% endblock %}

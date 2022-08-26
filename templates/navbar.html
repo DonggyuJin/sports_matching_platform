@@ -11,19 +11,19 @@
     </a>
     <ul class="navbar-nav ms-5 me-auto mb-2 mb-lg-0 py-3 d-flex justify-content-center">
       <li class="nav-link">
-        <a href="#">소개</a>
+        <a href="{% url 'common:introduce' %}">소개</a>
       </li>
       <li class="nav-link dropdown">
-        <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">매칭</a>
+        <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">라이킷 매칭</a>
           <ul class="dropdown-menu dropdown-menu-light dropdown-match">
             <li>
               <a class="dropdown-item" href="{% url 'match:index' %}">매칭 목록</a>
             </li>
             <li>
-              <a class="dropdown-item" href="{% url 'match:match_create' %}">신청</a>
+              <a class="dropdown-item" href="{% url 'match:match_create' %}">매칭 신청</a>
             </li>
             <li>
-              <a class="dropdown-item" href="{% url 'match:review_index' %}">후기</a>
+              <a class="dropdown-item" href="{% url 'match:review_index' %}">매칭 후기</a>
             </li>
           </ul>  
       </li>

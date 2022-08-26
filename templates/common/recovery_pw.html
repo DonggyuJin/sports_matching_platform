@@ -1,25 +1,99 @@
-{% extends "base.html" %}
-{% block content %}
-<div>
-    {% csrf_token %}
-    <div>
-        <label name="label_username" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
-        {{ form.username }}
-    </div>
-    <div>
-        <label name="label_email" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
-            {{ form.email }}
-        <small>
-            등록하신 메일로 인증번호가 발송됩니다.
-        </small>
-    </div>
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/bootstrap.min.css' %}"
+    />
+    <!-- custom CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+    <!-- font Nanum gothic -->
+    <head>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;400;500;700&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    </head>
+    <title>스투파</title>
+  </head>
+  <body>
+    <section class="vh-100 d-flex justify-content-center align-items-center">
+        <div class="container py-5 h-300">
+          <div class="row d-flex align-items-center justify-content-center h-100">
+            <div class="col-md-12 col-lg-12 col-xl-12 text-center login-header mb-5">
+              <h1 class="fw-bold text-decoration">
+                <a href="{% url 'common:login' %}">
+                  STP 비밀번호 찾기
+                </a>
+              </h1>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-6 border border-2 sign-form rounded-3">
+                {% csrf_token %}
 
-    <div id="div_find_pw">
-        <button id="find_pw" name="recovery_pw">비밀번호찾기</button>
-    </div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-2 d-flex justify-content-center align-items-center pe-0">
+                            <label class="text-danger fw-bold" name="label_username" for="{{ form.username.id_for_label }}">
+                                * {{ form.username.label }}
+                            </label>
+                        </div>
+                        <div class="col ps-0">
+                            {{ form.username|default_if_none:'' }}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-2 d-flex justify-content-center align-items-center pe-0">
+                            <label class="text-danger fw-bold" name="label_username" for="{{ form.username.id_for_label }}">
+                                * {{ form.email.label }}
+                            </label>
+                        </div>
+                        <div class="col ps-0">
+                            {{ form.email|default_if_none:'' }}
+                        </div>
+                    </div>
+                </div>
 
-    <div id="result_pw"></div>
-</div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col ps-0">
+                            <span class="text-warning fw-bold">
+                                등록하신 메일로 인증번호가 발송됩니다.
+                            </span>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="row py-3">
+                    <div class="col-4"></div>
+                    <div class="col-4 d-flex justify-content-center" id="div_find_pw">
+                        <button class="btn px-3 login-btn text-white fs-4" id="find_pw" name="recovery_pw">비밀번호 찾기</button>
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+    
+                <div id="result_pw"></div>
+
+            </div>
+          </div>
+        </div>
+      </section>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#find_pw').click(function () {
@@ -39,12 +113,11 @@
                 success: function (response) {
                     $('#loading_end').remove()
                     alert('회원님의 이메일로 인증코드를 발송하였습니다.');
-                    // $('#result_pw').replaceWith('<h5><p id="result_pw">회원님의 비밀번호는 <strong>'+response.result_pw+'</strong> 입니다.</p></h5>')
+
                     $('#div_find_pw').remove()
                     $('#result_pw').replaceWith(
-                        // '<br><form action="{% url "common:recovery_auth" %}" method="POST"><input type="text" name="input_auth_num" placeholder="인증번호를 입력해주세요." class="form-control" /><br><button type="submit" name="auth_confirm" class="btn btn-danger">인증확인</button></form>'
-                        '<hr><div class="row justify-content-md-center"><form class="form-inline" style="margin-bottom:-15px; margin-top:-10px;"><div class="md-form md-outline"><label for="input_auth_num">인증번호 입력 (<span id="timeset"></span>)</label><input type="text" id="input_auth_num" class="form-control mx-sm-2" autofocus/></div></form>'+
-                        '<button type="submit" name="auth_confirm" id="id_auth_confirm" class="btn btn-red" style="opacity: 90%; height:30%; margin-top:10px; font-size: 12px;"><i class="fas fa-check"></i>&nbsp;&nbsp;인증확인</button></div><hr>'
+                        '<div class="row"><div class="col-6 ps-5 pe-4 pb-4 text-center"><form><label class="text-success pb-3" for="input_auth_num">인증번호 입력 (<span id="timeset"></span>)</label><input type="text" id="input_auth_num" class="form-control mx-sm-2" autofocus/></form></div>'+
+                        '<div class="col-6 d-flex justify-content-center align-items-center"><button type="submit" name="auth_confirm" id="id_auth_confirm" class="btn px-3 login-btn text-white fs-4">인증확인</button></div></div>'
                     )
                     function countdown( elementName, minutes, seconds ) {
                         var elementName, endTime, hours, mins, msLeft, time;
@@ -115,4 +188,5 @@
         })
     });
 </script>
-{% endblock %}
+</body>
+</html>

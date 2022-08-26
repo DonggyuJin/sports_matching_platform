@@ -1,62 +1,135 @@
 {% extends 'base.html' %}
 {% load match_filter %}
 {% block content %}
-<div class="container">
-    <h5 class="my-3 border-bottom pb-2">매칭등록</h5>
-    <div class="row">
-    <form method="post">
-        {% csrf_token %}
-        {% include "form_errors.html" %}
-        <div class="mb-3">
-            <label for="title" class="form-label">제목</label>
-            <input type="text" class="form-control" name="title" id="title"
-                   value="{{ form.title.value|default_if_none:'' }}">
+<section class="vh-100">
+    <div class="container py-5 h-300">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="col-md-12 col-lg-12 col-xl-12 text-center login-header mb-5">
+          <h1 class="fw-bold text-decoration">
+            <a href="javascript:history.back()">
+                매칭신청
+              </a>
+          </h1>
         </div>
-        <div class="mb-3">
-            <label for="sports_name" class="form-label">스포츠명</label>
-            <input type="text" class="form-control" name="sports_name" id="sports_name"
-                   value="{{ form.sports_name.value|default_if_none:'' }}">
-        </div>
-        <div class="mb-3">
-            <label for="address" class="form-label">주소</label>
-            <div class="container ps-0">
+        <div class="col-md-6 col-lg-6 col-xl-6 border border-2 sign-form rounded-3">
+            <form method="post">
+            {% csrf_token %}
+            {% include "form_errors.html" %}
+
+            <div class="mb-3">
                 <div class="row">
-                  <div class="col-5">
-                    <input
-                  type="text"
-                  class="form-control m-input m--margin-top-10"
-                  name="address"
-                  id="address"
-                  value="{{ form.address.value|default_if_none:'' }}"
-                    />
-                  </div>
-                  <div class="col-2 postcode-btn">
-                    <button type="button" class="btn btn-success m-btn--air" onclick="execDaumPostcode()">주소 검색</button>
-                  </div>
-                  
+                    <div class="col-4 d-flex align-items-center pe-0">
+                        <label class="text-warning fw-bold" for="title">
+                            제목
+                        </label>
+                    </div>
+                    <div class="col ps-0">
+                        <input type="text" class="form-control sign-form-input" name="title" id="title"
+                               value="{{ form.title.value|default_if_none:'' }}">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-2 mb-3">
-            <label for="sports_date" class="form-label">일정</label>
-            <input type="date" class="form-control" name="sports_date" id="sports_date"
-                   value="{{ form.sports_date.value|default_if_none:'' }}">
-        </div>
-        <div class="col-2 mb-3">
-            <label for="max_apply" class="form-label">인원 (🚩limit: 1-20)</label>
-            <input type="number" class="form-control" name="max_apply" id="max_apply"
-                   min="1" max="20"
-                   value="{{ form.max_apply.value|default_if_none:'' }}">
-        </div>
-        <div class="mb-3">
-            <label for="content" class="form-label">내용</label>
-            <textarea class="form-control" name="content"
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-4 d-flex align-items-center pe-0">
+                        <label class="text-warning fw-bold" for="sports_name">
+                            스포츠명
+                        </label>
+                    </div>
+                    <div class="col ps-0">
+                        <input type="text" class="form-control sign-form-input" name="sports_name" id="sports_name"
+                               value="{{ form.sports_name.value|default_if_none:'' }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-4 d-flex align-items-center pe-0">
+                        <label class="text-warning fw-bold" for="address">
+                            주소
+                        </label>
+                    </div>
+                    <div class="col ps-0">
+                        <div class="container ps-0">
+                            <div class="row">
+                              <div class="col-8">
+                                <input
+                                    type="text"
+                                    class="form-control sign-form-input m-input m--margin-top-10"
+                                    name="address"
+                                    id="address"
+                                    value="{{ form.address.value|default_if_none:'' }}"
+                                />
+                              </div>
+                              <div class="col postcode-btn">
+                                <button type="button" class="btn btn-success m-btn--air" onclick="execDaumPostcode()">주소 검색</button>
+                              </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-4 d-flex align-items-center pe-0">
+                        <label class="text-warning fw-bold" for="sports_date">
+                            일정
+                        </label>
+                    </div>
+                    <div class="col ps-0">
+                        <input type="date" class="form-control sign-form-input" name="sports_date" id="sports_date"
+                               value="{{ form.sports_date.value|default_if_none:'' }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-4 d-flex align-items-center pe-0">
+                        <label class="text-warning fw-bold" for="max_apply">
+                            인원 (only, 1-20)
+                        </label>
+                    </div>
+                    <div class="col ps-0">
+                        <input type="number" class="form-control sign-form-input" name="max_apply" id="max_apply"
+                        min="1" max="20"
+                        value="{{ form.max_apply.value|default_if_none:'' }}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-4 d-flex align-items-center pe-0">
+                        <label class="text-warning fw-bold" for="content">
+                            내용
+                        </label>
+                    </div>
+                    <div class="col ps-0">
+                        <textarea class="form-control apply-textarea sign-form-input" name="content"
                       id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-3">
+                <div class="col-4"></div>
+                <div class="col-4 d-flex justify-content-center">
+                    <button type="submit" class="btn px-4 login-btn text-white fs-4">저장하기</button>
+                </div>
+                <div class="col-4"></div>
+            </div>
+            
+  
+          </form>
         </div>
-        <button type="submit" class="btn btn-primary">저장하기</button>
-    </form>
+      </div>
     </div>
-</div>
+  </section>
 {% endblock %}
 {% block script %}
 <script type='text/javascript'>

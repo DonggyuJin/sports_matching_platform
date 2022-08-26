@@ -5,16 +5,31 @@
   <div class="row mt-3">
   {% if match_list %}
   {% for match in match_list %}
-  <div class="col-lg-3 my-2">
+  <div class="col-lg-4 my-2">
     
   <div class="card border-0 shadow mb-3">
-    <div class="card-header py-3">
-        💌 {{ match.title }}
+    <div class="card-header py-3 card-header-bg">
+      <div class="row">
+        <div class="col-8">
+          💌 {{ match.title }}
+        </div>
+        <div class="col">
+          <div class="col d-flex justify-content-center align-items-center">
+            <p class="card-text">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
+                    <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z"/>
+                  </svg>
+                  <span class="ps-1 fs-6">{{ match.apply_count }}/{{ match.max_apply }}</span>
+            </p>
+        </div>
+        </div>
+      </div>
+        
     </div>
     <div class="card-body">
       <div class="container px-0">
         <div class="row pt-2 pb-4">
-            <div class="col-8">
+            <div class="col-9">
                 <h5 class="card-title">🎅 {{ match.author.username }}</h5>
             </div>
             <div class="col">
@@ -41,7 +56,7 @@
       
       <div class="container mt-2 px-0">
         <div class="row">
-            <div class="col-8">
+            <div class="col d-flex justify-content-end">
                 <form action="{% url 'match:apply' match.id %}" method="post" class="my-3">
                     {% csrf_token %}
                     {% if request.user != match.author %}
@@ -63,14 +78,7 @@
                     {% endif %}
                 </form>
             </div>
-            <div class="col d-flex justify-content-center align-items-center">
-                <p class="card-text">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-person-heart" viewBox="0 0 16 16">
-                        <path d="M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276Z"/>
-                      </svg>
-                      <span class="ps-1">{{ match.apply_count }}/{{ match.max_apply }}</span>
-                </p>
-            </div>
+            
         </div>
       </div>
     </div>

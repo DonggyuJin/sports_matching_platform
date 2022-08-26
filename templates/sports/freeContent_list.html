@@ -1,34 +1,32 @@
 {% extends 'base.html' %} 
 {% load sports_filter %} 
 {% block content %}
-<div class="container my-3">
+<div class="container my-5 pb-5">
   <div class="row my-3">
-    <div class="col-6">
-        <a href="{% url 'sports:content_create' %}" class="btn btn-primary">질문 등록하기</a>
-    </div>
-    <div class="col-6">
+    <div class="col-9"></div>
+    <div class="col d-flex justify-content-end">
         <div class="input-group">
-            <input type="text" id="search_sports" class="form-control" value="{{ sports|default_if_none:'' }}">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+            <input type="text" id="search_sports" class="form-control rounded-3" value="{{ sports|default_if_none:'' }}">
+            <div class="input-group-append ps-3">
+                <button class="btn btn-info text-white" type="button" id="btn_search">&nbsp;&nbsp;검색&nbsp;&nbsp;</button>
             </div>
         </div>
     </div>
   </div>
   <table class="table table-hover">
-    <thead class="table-secondary">
-      <tr class="text-center">
+    <thead class="table-dark">
+      <tr class="text-center text-white">
         <th>번호</th>
-        <th>제목</th>
+        <th style="width: 40%;">제목</th>
         <th>조회수</th>
         <th>글쓴이</th>
         <th>작성일시</th>
       </tr>
     </thead>
-    <tbody class="table-light">
+    <tbody class="table-primary text-dark">
       {% if freeContent_list %} 
       {% for content in freeContent_list %}
-      <tr class="text-center">
+      <tr class="text-center border border-bottom border-dark">
         <td>
           {{ freeContent_list.paginator.count|sub:freeContent_list.start_index|sub:forloop.counter0|add:1 }}
         </td>
@@ -100,6 +98,9 @@
     </li>
     {% endif %}
 </ul>
+<div class="col d-flex justify-content-end">
+  <a href="{% url 'sports:content_create' %}" class="btn btn-success">글쓰기</a>
+</div>
 </div>
 <form id="searchForm" method="get" action="{% url 'sports:index' %}">
   <input type="hidden" id="sports" name="sports" value="{{ sports|default_if_none:'' }}">

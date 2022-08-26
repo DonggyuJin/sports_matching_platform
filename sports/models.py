@@ -9,6 +9,7 @@ class FreeContent(models.Model):
     create_date = models.DateTimeField()
     modify_date = models.DateTimeField(null=True, blank=True)
     recommend = models.ManyToManyField(CustomUser, related_name='recommend_content')
+    hits = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.subject
